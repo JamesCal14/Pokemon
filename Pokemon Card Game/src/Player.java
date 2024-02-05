@@ -30,9 +30,54 @@ public class Player
 		int deckSize = 60;
 		for(int i = 1; i <deckSize;i++)
 		{
-			deck.add(new Energy());
-			//deck.add(new Pokemon());
+			//creating a deck filled with 20 fire energy, 20 charmanders, and 20 PR cards
+			deck.add(new Energy("Fire"));
+			deck.add(new Charmander());
 			deck.add(new Trainer());
+		}
+	}
+	
+	
+	public void playerTurn()
+	{
+		hand.add(drawCard());
+		//play pokemon
+		playPokemon();
+		//play energy
+		//play trainer
+		//attack
+		//end
+	}
+	
+	public void playPokemon()
+	{
+		for(int i = 0; i<activePile.size();i++)
+		{
+			Card currentCard = hand.get(i);
+			if(currentCard instanceof Pokemon)
+			{
+				addToActive(currentCard);
+			}
+		}
+	}
+	
+	public void playEnergy()
+	{
+		for(int i = 0; i<hand.size();i++)
+		{
+			Card currentCard = hand.get(i);
+			if(currentCard instanceof Energy)
+			{
+				addToActive(currentCard);
+			}
+		}
+	}
+	
+	public void giveEnergy(Pokemon e)
+	{
+		if (e instanceof Charmander)
+		{
+			//storage.add(energy)
 		}
 	}
 	
@@ -75,6 +120,11 @@ public class Player
 		}
 	}
 	
+	public int prizePileSize()
+	{
+		return prizePile.size();
+	}
+	
 	public void addToDeck(Card e)
 	{
 		deck.add(e);
@@ -90,7 +140,7 @@ public class Player
 		benchPile.add(e);
 	}
 	
-	public void addToActive(Pokemon e)
+	public void addToActive(Card e)
 	{
 		activePile.add(e);
 	}

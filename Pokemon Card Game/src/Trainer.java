@@ -4,8 +4,20 @@
  */
 public class Trainer extends Card
 {
-	public void ability()
+	private String name;
+	
+	public Trainer()
 	{
-		
+		name = "Professor's Research";
+	}
+	
+	public void tcAbility(Player player)
+	{
+		player.drawHand();
+	}
+	
+	public String getTrainerName()
+	{
+		return name;
 	}
 }

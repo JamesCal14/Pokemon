@@ -34,14 +34,20 @@ public class PokemonCardGame
 	
 	public void setUpGame()
 	{
-		
+		playerOne.drawHand();
+		playerTwo.drawHand();
+		playerOne.drawPrizePile();
+		playerTwo.drawPrizePile();
 	}
 	//Make engine for program
 	public void runGame()
 	{
-		playerOne.drawHand();
-		System.out.println(playerOne.evaluateOpeningHand());
 		//setUpGame();
 		//while (player1/player2 has prize pile cards) then run game
+		while (playerOne.prizePileSize() > 0 || playerTwo.prizePileSize() > 0)
+		{
+			//playerOneTurn()
+			//playerTwoTurn()
+		}
 	}
 }
