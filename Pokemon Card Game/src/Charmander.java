@@ -1,6 +1,8 @@
 
 public class Charmander extends Pokemon implements Attackable
 {
+	public String name = "Charmander";
+	public String type = "Fire";
 	String attackOneName = "Scratch";
 	String attackTwoName = "Ember";
 	public Charmander()
@@ -19,5 +21,10 @@ public class Charmander extends Pokemon implements Attackable
 	public void attackTwo(Pokemon unfortunatePokemon)
 	{
 		//deal 30 dmg and discard fire energy
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 }

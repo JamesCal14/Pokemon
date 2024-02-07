@@ -13,10 +13,11 @@ public class Trainer extends Card
 	
 	public void tcAbility(Player player)
 	{
+		player.discardHand();
 		player.drawHand();
 	}
 	
-	public String getTrainerName()
+	public String getName()
 	{
 		return name;
 	}

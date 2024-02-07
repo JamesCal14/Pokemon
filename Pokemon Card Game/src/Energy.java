@@ -13,4 +13,14 @@ public class Energy extends Card
 	{
 		type = t;
 	}
+	
+	public String getType()
+	{
+		return type;
+	}
+	
+	public String getName()
+	{
+		return type+" Energy";
+	}
 }

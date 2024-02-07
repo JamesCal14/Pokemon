@@ -2,8 +2,9 @@ import java.util.ArrayList;
 
 public class Pokemon extends Card
 {
+	private String name;
+	private String type;
 	private int hp;
-	private ArrayList<Energy> storage;
 	
 	public Pokemon()
 	{
@@ -18,5 +19,10 @@ public class Pokemon extends Card
 	public void setHp(int userInputHp)
 	{
 		hp = userInputHp;
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 }
