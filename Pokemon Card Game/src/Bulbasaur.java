@@ -1,12 +1,24 @@
 
-public class Bulbasaur extends Pokemon
+public class Bulbasaur extends Pokemon implements Attackable
 {
+	public String name = "Bulbasaur";
+	public String type = "Grass";
+	String attackOneName = "Tackle";
+	String attackTwoName = "Leech Seed";
 	public Bulbasaur()
 	{
 		setHp(70);
 	}
 	
-	public void leechSeed(Pokemon target)
+	public void attackOne(Pokemon target)
+	{
+		//deal 10 dmg
+		int currentHp = target.getHp();
+		int resultingHp = currentHp - 10;
+		target.setHp(resultingHp);
+	}
+	
+	public void attackTwo(Pokemon target)
 	{
 		//deal 20 dmg, heal 20 dmg
 		int currentHp = target.getHp();
@@ -18,5 +30,10 @@ public class Bulbasaur extends Pokemon
 		
 		target.setHp(resultingHp);
 		
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 }

@@ -1,6 +1,8 @@
 
 public class Pikachu extends Pokemon implements Attackable
 {	
+	public String name = "Pikachu";
+	public String type = "Eletric";
 	String attackOneName = "Quick Attack";
 	String attackTwoName = "Electro Ball";
 	public Pikachu()
@@ -19,5 +21,13 @@ public class Pikachu extends Pokemon implements Attackable
 	public void attackTwo(Pokemon unfortunatePokemon)
 	{
 		//deal 60 dmg
+		int currentHp = unfortunatePokemon.getHp();
+		int resultingHp = currentHp - 60;
+		unfortunatePokemon.setHp(resultingHp);
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 }

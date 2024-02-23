@@ -1,24 +1,27 @@
 /*
- * Add trainer card Professor's research
- * Rebuild deck using equal parts PR, Energy and Charmander
+ * Trainer class extends card
+ * 3 Trainer cards - Professor's Research, Nest Ball, N
  */
-public class Trainer extends Card
+public class Trainer extends Card implements TrainerAction
 {
 	private String name;
 	
 	public Trainer()
 	{
-		name = "Professor's Research";
+		name = "None";
 	}
 	
-	public void tcAbility(Player player)
+	public Trainer(String name)
 	{
-		player.discardHand();
-		player.drawHand();
+		this.name = name;
 	}
 	
 	public String getName()
 	{
 		return name;
+	}
+
+	public void playable(Player player) 
+	{
 	}
 }
