@@ -21,7 +21,7 @@ public class TestExample
 		mySampleNumbers.add(60);
 		mySampleNumbers.add(52);
 		mySampleNumbers.add(41);
-		boolean storeResults = test.dependency(.4, .6, .24);
+		double storeResults = test.conditionProbDependent(0.5, .3, .1);
 		
 		
 		

@@ -6,7 +6,6 @@ public class Example
 	/*
 	 * Central tendencies Mean, Median and Mode
 	 * Accepts userInput of type ArrayList<Integer> and returns double value
-	 * -Fix mode
 	 */
 	public double findMean(ArrayList<Integer> userInput)
 	{
@@ -21,7 +20,10 @@ public class Example
 		
 	}
 	
-	//In the median method, the Collections.sort method is used to organize the list in order to locate the middle
+	/*
+	 * Median method
+	 * Calls Collections.sort to organize the list of userInput
+	 */
 	public double findMedian(ArrayList<Integer> userInput)
 	{
 		Collections.sort(userInput);
@@ -39,8 +41,9 @@ public class Example
 		}
 	}
 	
-	//mode - the number that occurs the most, but it must be unique, no 2 or more modes.
-	//if two modes, return null
+	/*
+	 * Mode will not return Null if there are two or more modes
+	 */
 	public double findMode(ArrayList<Integer> userInput)
 	{
 		ArrayList<Integer> set = new ArrayList<Integer>();
@@ -165,6 +168,13 @@ public class Example
 		return var = Math.sqrt(var/(userInput.size()-1));
 	}
 	
+	/*
+	 * Factorial
+	 * Three methods for different data types
+	 * One for BigInteger, one for long, and one for double
+	 * BigInteger being the main one as double and long are limited, when a
+	 * number grows too large it will become negative
+	 */
 	public BigInteger factorial(int n)
 	{
 		int factor = 1;
@@ -197,98 +207,214 @@ public class Example
 		return factor;
 	}
 	
-	public double premutation(int set, int subset)
+	/*
+	 * Permutation and Combination
+	 * Uses BigInteger, its methods, and main factorial method 
+	 * Converts and returns a number of type double
+	 */
+	public double permutation(int set, int subset)
 	{
-		// n! / (n-r)!
-		double pre;
-		pre = factorial2(set) / (factorial2(set - subset));
-		return pre;
+		BigInteger pre;
+		pre = factorial(set).divide(factorial(set - subset));
+		return pre.doubleValue();
 	}
 	
 	public double combination(int set, int subset)
 	{
-		// n! / r! (n-r)!
-		double comb;
-		comb = factorial2(set) / (factorial2(subset) * (factorial2(set - subset)));
-		return comb;
+		BigInteger comb;
+		comb = factorial(set).divide(factorial(subset).multiply(factorial(set - subset)));
+		return comb.doubleValue();
 	}
 	
 	/*
-	 * Union, Intersect and Complement math helper methods
+	 * Conditional Probability
+	 * Two methods
+	 * One for two independent events
+	 * One for two dependent events which assumes the probability of
+	 * intersection is given and calculates based on the missing value A or B
 	 */
-	public double unionMath(double a, double b)
+	public double conditionProbIndependent(double eventA, double eventB)
 	{
-		double union;
-		union = (a+b)-intersectMath(a, b);
-		return union;
+		return (eventA*eventB) / eventB;
 	}
 	
-	public double intersectMath(double a, double b)
-	{	
-		double intersect;
-		intersect = a*b;
-		return intersect;
-	}
-	
-	public double complementMath(double a)
+	public double conditionProbDependent(double eventA, double eventB, double eventI)
 	{
-		double nA;
-		a = a*100;
-		nA = 100 - a;
-		return nA;
-	}
-	
-	public double conditionProb(double aProb, double bProb, double iProb)
-	{
-		double cond = iProb / bProb;
-		return cond;
-	}
-	
-	//huge method header to determine which probabilities are present/ non-present
-	public boolean dependency(double aProb, double bProb, double iProb)
-	{
-		//assumes all three values are given
-		if(conditionProb(aProb, bProb, iProb)==aProb)
+		if(eventA==0)
 		{
+			return eventI / eventB;
+		}
+		else
+		{
+			return eventI / eventA;
+		}
+	}
+	
+	/*
+	 * Intersection
+	 * Two methods
+	 * One for independent and dependent
+	 * Independent method simply multiples the probability of the two events
+	 * Dependent method assumes the conditional probability of event 1 given event 2
+	 * and multiplies by the probability of event 2
+	 */
+	public double intersectionIndependent(double eventA, double eventB)
+	{
+		return eventA*eventB;
+	}
+	
+	public double intersectionDependent(double eventA, double condProbB)
+	{
+		return eventA*condProbB;
+	}
+	
+	/*
+	 * Union
+	 * Two Methods
+	 * One for exclusive and one for nonexclusive
+	 * Exclusive simply adds the probabilities
+	 * Nonexclusive assumes Intersection is given and subtracts that from the sum
+	 * of probabilities
+	 */
+	public double unionExclusive(double eventA, double eventB)
+	{
+		return eventA + eventB;
+	}
+	
+	public double unionNonexclusive(double eventA, double eventB, double eventI)
+	{
+		return eventA + eventB - eventI;
+	}
+	
+	/*
+	 * Dependency returns whether two events are independent or not
+	 * Uses methods previously defined
+	 * Assumes the events are independent at the start
+	 */
+	public boolean dependency(double eventA, double eventB)
+	{
+		if(conditionProbIndependent(eventA, eventB)==eventA)
+		{
+			System.out.println("P(A|B) = P(A)\nEvent A and B are independent");
 			return true;
 		}
-		else if(conditionProb(bProb, aProb, iProb)==bProb)
+		else if(conditionProbIndependent(eventB, eventA)==eventB)
 		{
+			System.out.println("P(B|A) = P(B)\nEvent A and B are independent");
 			return true;
 		}
-		else if(iProb==(aProb*bProb))
+		else if(intersectionIndependent(eventA, eventB)==(eventA*eventB))
 		{
+			System.out.println("P(A I B) = P(A)*P(B)\nEvent A and B are independent");
 			return true;
 		}
 		else
 		{
+			System.out.println("Event A and B are not independent");
 			return false;
 		}
 	}
 	
-	public double totalProbability(double aProb, double bProb, double iProb)
+	/*
+	 * Binomial Probability Distribution
+	 * Uses combination method and Math.pow to return a result of double
+	 * Included methods to calculate Expectance, Variance, and Standard Deviation
+	 */
+	public double binomialDistribution(int n, double p, double q, int y)
 	{
-		//totalProb the probability of B is always changing, is it possible to program
-		//with inputting a huge list of numbers?
-		double total;
-		total = conditionProb(aProb, bProb, iProb) * bProb;
-		return total;
+		return combination(n,y)*Math.pow(p, y)*Math.pow(q, (n-y));
 	}
 	
-	public double bayesRule(double aProb, double bProb, double aConProb, double bConProb)
+	public double getExpectedBD(int n, double p)
 	{
-		double result;
-		result = (bConProb*bProb) / ((bConProb*bProb) + (aConProb*aProb));
-		return result;
+		return n*p;
 	}
 	
-	public void pmf()
+	public double getVarianceBD(int n, double p, double q)
 	{
-		//uses premutation
+		return n*p*q;
 	}
 	
-	public void binomialDistributions()
+	public double getStanDevBD(int n, double p, double q)
 	{
-		
+		return Math.sqrt(getVarianceBD(n,p,q));
+	}
+	
+	/*
+	 * Geometric Probability Distribution
+	 * Uses Math.pow to return a result of double
+	 * Included methods to calculate Expectance, Variance, and Standard Deviation
+	 */
+	public double geometricDistribution(double p, double q, int y)
+	{
+		return Math.pow(q, y-1) * p;
+	}
+	
+	public double getExpectedGD(double p)
+	{
+		return 1/p;
+	}
+	
+	public double getVarianceGD(double p)
+	{
+		return (1-p)/Math.pow(p, 2);
+	}
+	
+	public double getStanDevGD(double p)
+	{
+		return Math.sqrt(getVarianceGD(p));
+	}
+	
+	/*
+	 * Negative Binomial Probability Distribution
+	 * Uses combination method and Math.pow to return a result of double
+	 * Included methods to calculate Expectance, Variance, and Standard Deviation
+	 */
+	public double negBinoDistribution(int r, double p, double q, int y)
+	{
+		return combination((y-1), (r-1)) * Math.pow(p, r) * Math.pow(q, (y-r));
+	}
+	
+	public double getExpectedNBD(int r, double p)
+	{
+		return (r/p);
+	}
+	
+	public double getVarianceNBD(int r, double p)
+	{
+		return (r*(1 - p))/Math.pow(p, 2);
+	}
+	
+	public double getStanDevNBD(int r, double p)
+	{
+		return Math.sqrt(getVarianceNBD(r, p));
+	}
+	
+	/*
+	 * Hypergeometric Probability Distribution
+	 * Splits the numerator and denominator to separate variables
+	 * Uses combination method to return a result of double
+	 * Included methods to calculate Expectance, Variance, and Standard Deviation
+	 */
+	public double hyperGeoDistribution(int N, int n, int r, int y)
+	{
+		double nA = combination(r, y) * combination((N-r),(n-y));
+		double nS = combination(N, n);
+		return (nA/nS);
+	}
+	
+	public double getExpectedHGD(int N, int n, int r)
+	{
+		return (n*r)/(double) N;
+	}
+	
+	public double getVarianceHGD(int N, int n, double r)
+	{
+		return n * (r/N) * ((N-r)/N) * ((N-n)/(N-1));
+	}
+	
+	public double getStanDevHGD(int N, int n, int r)
+	{
+		return Math.sqrt(getVarianceHGD(n,r,N));
 	}
 }
