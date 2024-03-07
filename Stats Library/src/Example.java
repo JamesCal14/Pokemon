@@ -42,31 +42,53 @@ public class Example
 	}
 	
 	/*
-	 * Mode will not return Null if there are two or more modes
+	 * Mode method
+	 * Returns object type of Integer which will be one singular mode
+	 * or will return null if two or more modes exist
+	 * Calls Collections.sort to organize userInput
 	 */
-	public double findMode(ArrayList<Integer> userInput)
+	public Integer findMode(ArrayList<Integer> userInput)
 	{
-		ArrayList<Integer> set = new ArrayList<Integer>();
-		double mode = 0;
-		int maxCount = 0;
+		Integer mode = 0;
+		int max = 0;
+		int count = 0;
 		Collections.sort(userInput);
 		for(int i = 0; i<userInput.size();i++)
 		{
-			if(set.size()>maxCount)
-			{
-				maxCount = set.size();
-				mode = userInput.get(i);
-			}
-			set.clear();
 			for(int j = i+1; j<userInput.size();j++)
 			{
 				if(userInput.get(i) == userInput.get(j))
 				{
-					set.add(userInput.get(i));
+					count++;
 				}
 			}
+			if(count>max)
+			{
+				max = count;
+				mode = userInput.get(i);
+			}
+			else if(count==max)
+			{
+				mode = null;
+			}
+			count=0;
 		}
 		return mode;
+	}
+	
+	/* Standard Deviation
+	 * Accepts userInput of ArrayList<Integer> and returns the Standard Deviation as a double
+	*/
+	public double standardDeviation(ArrayList<Integer> userInput)
+	{
+		double n = findMean(userInput);
+		double var = 0;
+		for (int i = 0; i<userInput.size();i++)
+		{
+			double d = userInput.get(i) - n;
+			var += d*d;
+		}
+		return var = Math.sqrt(var/(userInput.size()-1));
 	}
 	
 	/*
@@ -153,21 +175,6 @@ public class Example
 		return complement;
 	}
 	
-	/* Standard Deviation
-	 * Accepts userInput of ArrayList<Integer> and returns the Standard Deviation as a double
-	*/
-	public double standardDeviation(ArrayList<Integer> userInput)
-	{
-		double n = findMean(userInput);
-		double var = 0;
-		for (int i = 0; i<userInput.size();i++)
-		{
-			double d = userInput.get(i) - n;
-			var += d*d;
-		}
-		return var = Math.sqrt(var/(userInput.size()-1));
-	}
-	
 	/*
 	 * Factorial
 	 * Three methods for different data types
@@ -240,13 +247,13 @@ public class Example
 	
 	public double conditionProbDependent(double eventA, double eventB, double eventI)
 	{
-		if(eventA==0)
+		if(eventB==0)
 		{
-			return eventI / eventB;
+			return eventI / eventA;
 		}
 		else
 		{
-			return eventI / eventA;
+			return eventI / eventB;
 		}
 	}
 	
@@ -255,8 +262,8 @@ public class Example
 	 * Two methods
 	 * One for independent and dependent
 	 * Independent method simply multiples the probability of the two events
-	 * Dependent method assumes the conditional probability of event 1 given event 2
-	 * and multiplies by the probability of event 2
+	 * Dependent method assumes the conditional probability of event 2 given event 1
+	 * and multiplies by the probability of event 1
 	 */
 	public double intersectionIndependent(double eventA, double eventB)
 	{
@@ -288,29 +295,24 @@ public class Example
 	
 	/*
 	 * Dependency returns whether two events are independent or not
-	 * Uses methods previously defined
-	 * Assumes the events are independent at the start
+	 * Assumes Intersection of events is given to calculate conditional probability
 	 */
-	public boolean dependency(double eventA, double eventB)
+	public boolean dependency(double eventA, double eventB, double eventI)
 	{
-		if(conditionProbIndependent(eventA, eventB)==eventA)
+		if((eventI/eventB)==eventA)
 		{
-			System.out.println("P(A|B) = P(A)\nEvent A and B are independent");
 			return true;
 		}
-		else if(conditionProbIndependent(eventB, eventA)==eventB)
+		else if((eventI/eventA)==eventB)
 		{
-			System.out.println("P(B|A) = P(B)\nEvent A and B are independent");
 			return true;
 		}
-		else if(intersectionIndependent(eventA, eventB)==(eventA*eventB))
+		else if(eventI==(eventA*eventB))
 		{
-			System.out.println("P(A I B) = P(A)*P(B)\nEvent A and B are independent");
 			return true;
 		}
 		else
 		{
-			System.out.println("Event A and B are not independent");
 			return false;
 		}
 	}
@@ -408,13 +410,13 @@ public class Example
 		return (n*r)/(double) N;
 	}
 	
-	public double getVarianceHGD(int N, int n, double r)
+	public double getVarianceHGD(double N, int n, double r)
 	{
 		return n * (r/N) * ((N-r)/N) * ((N-n)/(N-1));
 	}
 	
 	public double getStanDevHGD(int N, int n, int r)
 	{
-		return Math.sqrt(getVarianceHGD(n,r,N));
+		return Math.sqrt(getVarianceHGD(N,n,r));
 	}
 }
