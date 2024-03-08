@@ -1,7 +1,11 @@
 
+/*
+ * Energy class extends Card and consists of Fire energy. Used to power up pokemon and unlock special attacks.
+ * Includes getType(), getName(), and getInfo() methods.
+ * 
+ */
 public class Energy extends Card
 {
-	//add fire energy (or appropriate type for pokemon)
 	private String type;
 	
 	public Energy()
@@ -22,5 +26,10 @@ public class Energy extends Card
 	public String getName()
 	{
 		return type+" Energy";
+	}
+	
+	public void getInfo()
+	{
+		System.out.println("\n"+getName()+" - Basic Energy Card\nUsed to power up Pokemon attacks of Type "+type+"\n");
 	}
 }
